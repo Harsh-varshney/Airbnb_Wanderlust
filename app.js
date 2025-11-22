@@ -1,7 +1,8 @@
 if(process.env.NODE_ENV != "production"){
     require('dotenv').config()
 }
-// console.log(process.env)
+
+let dbUrl = process.env.ATLASDB_URL;
 
 const express = require("express");
 const app = express();
@@ -11,6 +12,7 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session");
+const MongoStore = require('connect-mongo');
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -27,15 +29,14 @@ app.use(express.static(path.join(__dirname,"public")));
 app.use(methodOverride("_method"));
 app.engine("ejs",ejsMate);
 
-let dbUrl = process.env.ATLASDB_URL;
 main().then(() => {
     console.log("connect successfully");
 }).catch(err => console.log(err));
 
 
 async function main(){
-    await mongoose.connect("mongodb://127.0.0.1:27017/project");
-    // await mongoose.connect(dbUrl);
+    // await mongoose.connect("mongodb://127.0.0.1:27017/project");
+    await mongoose.connect(dbUrl);
 }
 
 let port = 8080;
@@ -43,8 +44,23 @@ app.listen(port,() => {
     console.log(`server listen at port : ${port}`);
 });
 
+// mongo store
+const store = MongoStore.create({
+    mongoUrl : dbUrl,
+    ttl: 7 * 24 * 60 * 60, 
+    // crypto: {
+    //     secret: 'mysupersecretcode'
+    // },
+    // touchAfter : 24 * 3600
+})
+
+store.on("error", () => {
+    console.log("ERROR IN MONGO SESSION STORE",err);
+})
+
 // for session
 const sessionOptions = {
+    store,
     secret : "mysupersecretcode",
     resave : false,
     saveUninitialized : true,
@@ -54,6 +70,7 @@ const sessionOptions = {
         httpOnly : true
     }
 };
+
 app.use(session(sessionOptions));
 app.use(flash());
 
@@ -67,14 +84,14 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // for register user
-app.get("/demouser",async (req,res) => {
-    let fakeUser = new User({
-        email : "Student@gmail.com",
-        username : "delta-student"
-    }); 
-    let registerUser = await User.register(fakeUser, "helloworld");
-    res.send(registerUser);
-});
+// app.get("/demouser",async (req,res) => {
+//     let fakeUser = new User({
+//         email : "Student@gmail.com",
+//         username : "delta-student"
+//     }); 
+//     let registerUser = await User.register(fakeUser, "helloworld");
+//     res.send(registerUser);
+// });
 
 
 
