@@ -53,45 +53,45 @@
     }
 
     /* MOBILE: make category bar horizontal scroll */
-@media (max-width: 576px) {
+    @media (max-width: 576px) {
 
-    #filters {
-        display: flex;
-        flex-wrap: nowrap;       /* row only */
-        overflow-x: auto;        /* horizontal scroll */
-        white-space: nowrap;
-        padding: 0.7rem 0.5rem;
-        position: sticky;
-        top: 70px;
-        background: white;
-        z-index: 2000;
-        gap: 1.2rem;             /* spacing between icons */
-    }
+        #filters {
+            display: flex;
+            flex-wrap: nowrap;       /* row only */
+            overflow-x: auto;        /* horizontal scroll */
+            white-space: nowrap;
+            padding: 0.7rem 0.5rem;
+            position: sticky;
+            top: 70px;
+            background: white;
+            z-index: 2000;
+            gap: 1.2rem;             /* spacing between icons */
+        }
 
-    #filters::-webkit-scrollbar {
-        display: none;           /* hide scrollbar */
-    }
+        #filters::-webkit-scrollbar {
+            display: none;           /* hide scrollbar */
+        }
 
-    .filter {
-        flex: 0 0 auto;          /* each item stays same size */
-        margin-right: 0.5rem;
-        margin-top: 0.2rem;
-        opacity: 0.8;
-        text-align: center;
-    }
+        .filter {
+            flex: 0 0 auto;          /* each item stays same size */
+            margin-right: 0.5rem;
+            margin-top: 0.2rem;
+            opacity: 0.8;
+            text-align: center;
+        }
 
-    .filter p {
-        font-size: 0.7rem;
-    }
+        .filter p {
+            font-size: 0.7rem;
+        }
 
-    .tax-toggle {
-        flex: 0 0 auto;
-        margin-left: 1rem;
-        padding: 0.4rem 0.6rem;
-        font-size: 0.7rem;
-        height: auto;
+        .tax-toggle {
+            flex: 0 0 auto;
+            margin-left: 1rem;
+            padding: 0.4rem 0.6rem;
+            font-size: 0.7rem;
+            height: auto;
+        }
     }
-}
 
 </style>
 
