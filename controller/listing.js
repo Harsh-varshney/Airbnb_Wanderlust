@@ -22,13 +22,11 @@ module.exports.filterRoute = async (req, res) => {
         let allListings = [];
 
         if (!searchText) {
-        // Empty search → show all listings
-        allListings = await Listing.find({});
-        // req.flash("success", "Showing all listings");
-        return res.redirect("/listings/index.ejs"); // redirect to keep URL clean
+            allListings = await Listing.find({});
+            // req.flash("success", "Showing all listings");
+            return res.redirect("/listings"); 
         }
 
-        // Build safe, case-insensitive regex
         const searchRegex = new RegExp(searchText.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i");
 
         // Search across multiple fields
@@ -42,16 +40,14 @@ module.exports.filterRoute = async (req, res) => {
 
         // Handle results
         if (allListings.length === 0) {
-        req.flash("error", `No listings found for “${searchText}”`);
-        return res.redirect("/listings"); // flash msg visible, avoids rendering empty page
+            req.flash("error", `No listings found for “${searchText}”`);
+            return res.redirect("/listings"); // flash msg visible, avoids rendering empty page
         }
 
         // console.log(searchText);
         
         // req.flash("success", `Results for “${searchText}”`);
         res.render("listings/index.ejs", { allListings });
-
-
     } catch (err) {
         console.error("Search error:", err);
         req.flash("error", "Something went wrong while searching.");

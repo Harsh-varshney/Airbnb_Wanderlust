@@ -83,30 +83,12 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-// for register user
-// app.get("/demouser",async (req,res) => {
-//     let fakeUser = new User({
-//         email : "Student@gmail.com",
-//         username : "delta-student"
-//     }); 
-//     let registerUser = await User.register(fakeUser, "helloworld");
-//     res.send(registerUser);
-// });
-
-
-
 app.use((req,res,next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     res.locals.currUser= req.user;
     next();
 });
-
-
-// app.get("/",(req,res) => {
-//     res.send("root route created");
-// });
-
 
 app.use("/listings",listingRouter);
 app.use("/listings/:id/reviews",reviewsRouter);
@@ -123,5 +105,16 @@ app.use((err,req,res,next) => {
     res.status(statusCode).render("error.ejs",{message});
     // res.status(statusCode).send(message);
 })
+
+
+// for register user
+// app.get("/demouser",async (req,res) => {
+//     let fakeUser = new User({
+//         email : "Student@gmail.com",
+//         username : "delta-student"
+//     }); 
+//     let registerUser = await User.register(fakeUser, "helloworld");
+//     res.send(registerUser);
+// });
 
 
