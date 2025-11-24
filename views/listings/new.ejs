@@ -41,6 +41,24 @@
                     </div>
                 </div>
 
+                <div class="mb-3">
+                    <label for="category" class="form-label"><b>Category</b></label>
+                    <select name="listing[category]" class="form-control" required>
+                        <option value="" disabled selected>Select category</option>
+                        <option value="beach">Beach</option>
+                        <option value="mountain">Mountain</option>
+                        <option value="city">City</option>
+                        <option value="farms">Farms</option>
+                        <option value="snow">Snow</option>
+                        <option value="lakes">Lakes</option>
+                        <option value="camping">Camping</option>
+                        <option value="boats">Boats</option>
+                        <option value="rooms">Rooms</option>
+                        <option value="trending">Trending</option>
+                    </select>
+                    <div class="invalid-feedback">Please select a category!</div>
+                </div>
+
                 <button class="btn btn-dark add-btn mb-5">Add</button>
             </form>
         </div>

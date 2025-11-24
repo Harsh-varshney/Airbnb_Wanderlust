@@ -35,8 +35,8 @@ main().then(() => {
 
 
 async function main(){
-    // await mongoose.connect("mongodb://127.0.0.1:27017/project");
-    await mongoose.connect(dbUrl);
+    await mongoose.connect("mongodb://127.0.0.1:27017/project");
+    // await mongoose.connect(dbUrl);
 }
 
 let port = 8080;
@@ -45,22 +45,22 @@ app.listen(port,() => {
 });
 
 // mongo store
-const store = MongoStore.create({
-    mongoUrl : dbUrl,
-    ttl: 7 * 24 * 60 * 60, 
-    // crypto: {
-    //     secret: 'mysupersecretcode'
-    // },
-    // touchAfter : 24 * 3600
-})
+// const store = MongoStore.create({
+//     mongoUrl : dbUrl,
+//     ttl: 7 * 24 * 60 * 60, 
+//     // crypto: {
+//     //     secret: 'mysupersecretcode'
+//     // },
+//     // touchAfter : 24 * 3600
+// })
 
-store.on("error", () => {
-    console.log("ERROR IN MONGO SESSION STORE",err);
-})
+// store.on("error", () => {
+//     console.log("ERROR IN MONGO SESSION STORE",err);
+// })
 
 // for session
 const sessionOptions = {
-    store,
+    // store,
     secret : process.env.SECRET,
     resave : false,
     saveUninitialized : true,
