@@ -39,7 +39,7 @@ async function main(){
     await mongoose.connect(dbUrl);
 }
 
-let port = 8080;
+let port = process.env.PORT || 8080;
 app.listen(port,() => {
     console.log(`server listen at port : ${port}`);
 });
@@ -54,7 +54,7 @@ const store = MongoStore.create({
     // touchAfter : 24 * 3600
 })
 
-store.on("error", () => {
+store.on("error", (err) => {
     console.log("ERROR IN MONGO SESSION STORE",err);
 })
 
@@ -89,6 +89,11 @@ app.use((req,res,next) => {
     res.locals.currUser= req.user;
     next();
 });
+
+
+app.get("/", (req, res) => {
+    res.redirect("/listings");
+})
 
 app.use("/listings",listingRouter);
 app.use("/listings/:id/reviews",reviewsRouter);
